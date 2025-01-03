@@ -14,6 +14,11 @@
 if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
 
+
+
+
+include_once('inc/exdos-functionality.php');
+
 /**
  * Main Exdos addon Class
  *
@@ -58,6 +63,11 @@ final class Elementor_Exdos_Addon
 	 * @since 1.0.0
 	 * @access public
 	 */
+
+
+
+
+
 	public function __construct()
 	{
 

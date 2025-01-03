@@ -3,9 +3,7 @@
 namespace ElementorExdosAddon;
 
 use ElementorExdosAddon\PageSettings\Page_Settings;
-use ElementorExdosAddon\Widgets\Hello_World;
-use ElementorExdosAddon\Widgets\Inline_Editing;
-use ElementorExdosAddon\Widgets\Demo;
+use ElementorExdosAddon\Widgets\Hero;
 
 /**
  * Class Plugin
@@ -113,14 +111,10 @@ class Plugin
 	public function register_widgets($widgets_manager)
 	{
 		// Its is now safe to include Widgets files
-		require_once(__DIR__ . '/widgets/hello-world.php');
-		require_once(__DIR__ . '/widgets/inline-editing.php');
-		require_once(__DIR__ . '/widgets/demo.php');
+		require_once(__DIR__ . '/widgets/hero.php');
 
 		// Register Widgets
-		$widgets_manager->register(new Hello_World());
-		$widgets_manager->register(new Inline_Editing());
-		$widgets_manager->register(new Demo());
+		$widgets_manager->register(new Hero());
 	}
 
 	/**
