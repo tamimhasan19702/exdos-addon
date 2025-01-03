@@ -112,8 +112,21 @@ class Hero extends Widget_Base
 		$this->register_style_tab_controls();
 	}
 
+
+
 	// register tab controls
 	protected function register_tab_controls()
+	{
+		$this->hero_title();
+		$this->hero_button();
+		$this->hero_social();
+
+
+
+
+	}
+
+	protected function hero_title()
 	{
 		$this->start_controls_section(
 			'Hero_section_content',
@@ -143,9 +156,22 @@ class Hero extends Widget_Base
 			]
 		);
 
+		$this->add_control(
+			'side_text',
+			[
+				'label' => __('Side Text', 'exdos-addons'),
+				'type' => Controls_Manager::TEXT,
+				'label_block' => true,
+				'default' => __('2k+ company trust us', 'exdos-addons'),
+
+			]
+		);
+
 		$this->end_controls_section();
+	}
 
-
+	protected function hero_button()
+	{
 		$this->start_controls_section(
 			'button_section',
 			[
@@ -181,7 +207,92 @@ class Hero extends Widget_Base
 		);
 
 		$this->end_controls_section();
+	}
 
+	protected function hero_social()
+	{
+		$this->start_controls_section(
+			'social_section',
+			[
+				'label' => __('Hero Social', 'exdos-addons'),
+			]
+		);
+
+		$this->add_control(
+			'social_header',
+			[
+				'label' => __('Social Header', 'exdos-addons'),
+				'type' => Controls_Manager::TEXT,
+				'label_block' => true,
+				'default' => __('Follow Us - ', 'exdos-addons'),
+
+			]
+		);
+
+
+
+		$repeater = new \Elementor\Repeater();
+
+
+		$repeater->add_control(
+			'social_name',
+			[
+				'label' => __('Social Name', 'exdos-addons'),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'label_block' => true,
+			]
+		);
+
+		$repeater->add_control(
+			'social_link',
+			[
+				'label' => __('Link', 'exdos-addons'),
+				'type' => Controls_Manager::URL,
+				'placeholder' => 'https://your-link.com',
+				'default' => [
+					'url' => '',
+					'is_external' => false,
+					'nofollow' => false,
+				]
+				// 'custom_attributes' => '',
+			]
+		);
+
+
+
+		$this->add_control(
+			'social_list',
+			[
+				'label' => __('Social List', 'exdos-addons'),
+				'type' => Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'default' => [
+					[
+						'social_name' => esc_html('FB', 'exdos-addons'),
+						'social_link' => '',
+					],
+					[
+						'social_name' => esc_html('TW', 'exdos-addons'),
+						'social_link' => '',
+					],
+					[
+						'social_name' => esc_html('IG', 'exdos-addons'),
+						'social_link' => '',
+					],
+
+					[
+						'social_name' => esc_html('LI', 'exdos-addons'),
+						'social_link' => '',
+					],
+
+				],
+				'title_field' => '{{{ social_name }}}',
+			]
+		);
+
+
+		$this->end_controls_section();
 	}
 
 	// register style tab controls
@@ -228,6 +339,8 @@ class Hero extends Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
+		$this->add_render_attribute('button_arg', 'class', 'tp-btn-sec tp-btn-sec-lg');
+		$this->add_link_attributes('button_arg', $settings['button_link']);
 
 		?>
 
@@ -243,14 +356,37 @@ class Hero extends Widget_Base
 			</div>
 			<div class="hero-info d-none d-xxl-flex">
 				<div class="hero-social">
-					<span>Follow Us - </span>
-					<a href="#">Fb</a>/
-					<a href="#">Tw</a>/
-					<a href="#">in</a>/
-					<a href="#">Be</a>
+					<?php if (!empty($settings['social_header'])): ?>
+						<span><?php echo exdos_addon_kses($settings['social_header']) ?></span>
+
+						<?php
+						if (!empty($settings['social_list'])): // Ensure you're checking the correct key
+							$social_links = []; // Initialize an array to hold the links
+			
+							$total_items = count($settings['social_list']); // Get the total number of items
+			
+							foreach ($settings['social_list'] as $index => $item): // Use index to track the current item
+								// Get the social link and name
+								$social_link = !empty($item['social_link']['url']) ? esc_url($item['social_link']['url']) : '#'; // Default to '#' if no link
+								$social_name = !empty($item['social_name']) ? esc_html($item['social_name']) : ''; // Default to empty if no name
+			
+								// Create the anchor tag
+								$anchor_tag = '<a href="' . $social_link . '">' . $social_name . '</a>';
+
+								// Add the anchor tag to the array
+								$social_links[] = $anchor_tag;
+
+							endforeach;
+
+							// Output the links joined by a separator, without a trailing slash
+							echo implode(' / ', $social_links);
+						endif;
+						?>
+
+					<?php endif; ?>
 				</div>
 				<div class="hero-info-text">
-					<span>2k+ company trust us</span>
+					<span><?php echo exdos_addon_kses($settings['side_text']) ?></span>
 				</div>
 			</div>
 			<div class="container">
@@ -267,15 +403,17 @@ class Hero extends Widget_Base
 							</h1>
 						<?php endif; ?>
 					</div>
-					<div class="tp-hero-btn wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.9s">
-						<a href="about.html" class="tp-btn-sec tp-btn-sec-lg">
-							<span class="tp-btn-wrap">
-								<span class="tp-btn-y-1"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
-								<span class="tp-btn-y-2"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
-							</span>
-							<i></i>
-						</a>
-					</div>
+					<?php if (!empty($settings['button_text'])): ?>
+						<div class="tp-hero-btn wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.9s">
+							<a <?php $this->print_render_attribute_string('button_arg'); ?>>
+								<span class="tp-btn-wrap">
+									<span class="tp-btn-y-1"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
+									<span class="tp-btn-y-2"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
+								</span>
+								<i></i>
+							</a>
+						</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</section>
