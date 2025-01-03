@@ -358,36 +358,50 @@ class Hero extends Widget_Base
 				<div class="hero-social">
 					<?php if (!empty($settings['social_header'])): ?>
 						<span><?php echo exdos_addon_kses($settings['social_header']) ?></span>
-
-						<?php
-						if (!empty($settings['social_list'])): // Ensure you're checking the correct key
-							$social_links = []; // Initialize an array to hold the links
-			
-							$total_items = count($settings['social_list']); // Get the total number of items
-			
-							foreach ($settings['social_list'] as $index => $item): // Use index to track the current item
-								// Get the social link and name
-								$social_link = !empty($item['social_link']['url']) ? esc_url($item['social_link']['url']) : '#'; // Default to '#' if no link
-								$social_name = !empty($item['social_name']) ? esc_html($item['social_name']) : ''; // Default to empty if no name
-			
-								// Create the anchor tag
-								$anchor_tag = '<a href="' . $social_link . '">' . $social_name . '</a>';
-
-								// Add the anchor tag to the array
-								$social_links[] = $anchor_tag;
-
-							endforeach;
-
-							// Output the links joined by a separator, without a trailing slash
-							echo implode(' / ', $social_links);
-						endif;
-						?>
-
 					<?php endif; ?>
+
+					<?php
+					if (!empty($settings['social_list'])): // Ensure you're checking the correct key
+						$social_links = []; // Initialize an array to hold the links
+			
+						foreach ($settings['social_list'] as $item): // Loop through each item
+							// Get the social link and name
+							$social_link = !empty($item['social_link']['url']) ? esc_url($item['social_link']['url']) : '#'; // Default to '#' if no link
+							$social_name = !empty($item['social_name']) ? esc_html($item['social_name']) : ''; // Default to empty if no name
+			
+							// Initialize the anchor tag with the href attribute
+							$anchor_tag = '<a href="' . $social_link . '"';
+
+							// Check if the link should open in a new tab
+							if (!empty($item['social_link']['is_external'])) {
+								$anchor_tag .= ' target="_blank"'; // Add target="_blank" for external links
+							}
+
+							// Check if the link should have nofollow attribute
+							if (!empty($item['social_link']['nofollow'])) {
+								$anchor_tag .= ' rel="nofollow"'; // Add rel="nofollow" for nofollow links
+							}
+
+							// Close the anchor tag
+							$anchor_tag .= '>' . $social_name . '</a>';
+
+							// Add the anchor tag to the array
+							$social_links[] = $anchor_tag;
+
+						endforeach;
+
+						// Output the links joined by a separator, without a trailing slash
+						echo implode(' / ', $social_links);
+					endif;
+					?>
+
+
 				</div>
-				<div class="hero-info-text">
-					<span><?php echo exdos_addon_kses($settings['side_text']) ?></span>
-				</div>
+				<?php if (!empty($settings['side_text'])): ?>
+					<div class="hero-info-text">
+						<span><?php echo exdos_addon_kses($settings['side_text']) ?></span>
+					</div>
+				<?php endif; ?>
 			</div>
 			<div class="container">
 				<div class="tp-hero p-relative z-index-11">
