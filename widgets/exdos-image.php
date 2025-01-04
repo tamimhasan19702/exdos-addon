@@ -9,15 +9,14 @@ if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
 
 /**
- * Elementor Exdos_header
+ * Elementor exdos_button
  *
- * Elementor widget for Exdos_header.
+ * Elementor widget for exdos_button.
  *
  * @since 1.0.0
  */
-class Exdos_header extends Widget_Base
+class Exdos_Image extends Widget_Base
 {
-
 	/**
 	 * Retrieve the widget name.
 	 *
@@ -29,7 +28,7 @@ class Exdos_header extends Widget_Base
 	 */
 	public function get_name()
 	{
-		return 'Exdos Header';
+		return 'Exdos Image';
 	}
 
 	/**
@@ -43,7 +42,7 @@ class Exdos_header extends Widget_Base
 	 */
 	public function get_title()
 	{
-		return __('Exdos Header', 'exdos-addons');
+		return __('Exdos Image', 'exdos-addons');
 	}
 
 	/**
@@ -57,7 +56,7 @@ class Exdos_header extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-heading';
+		return 'eicon-image';
 	}
 
 	/**
@@ -106,34 +105,68 @@ class Exdos_header extends Widget_Base
 	 */
 	protected function _register_controls()
 	{
+		$this->register_tab_controls();
+		// $this->register_style_tab_controls();
+	}
+
+	protected function exdos_button_button()
+	{
 		$this->start_controls_section(
-			'exdos_header_section',
+			'image_section',
 			[
-				'label' => __('Exdos Header', 'exdos-addons'),
+				'label' => __('Image', 'exdos-addons'),
 			]
 		);
 
 		$this->add_control(
-			'exdos_header_title',
+			'image',
 			[
-				'label' => __('Exdos Header Title', 'exdos-addons'),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => __('Let us building the bridge between <br />
-                    brand and customer', 'exdos-addons'),
+				'label' => __('Image', 'exdos-addons'),
+				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => [
+					'url' => Utils::get_placeholder_image_src(),
+				],
+			]
+		);
 
+		$this->end_controls_section();
+	}
+
+	// register tab controls
+	protected function register_tab_controls()
+	{
+		$this->exdos_button_button();
+	}
+
+	// register style tab controls
+	protected function register_style_tab_controls()
+	{
+		$this->start_controls_section(
+			'section_style',
+			[
+				'label' => __('Style', 'exdos-addons'),
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
-			'exdos_sub_text',
+			'text_transform',
 			[
-				'label' => __('Exdos Sub Text', 'exdos-addons'),
-				'type' => Controls_Manager::TEXTAREA,
-				'label_block' => true,
-				'default' => __('Let us building the bridge between <br />
-                    brand and customer', 'exdos-addons'),
-
+				'label' => __('Text Transform', 'exdos-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => '',
+				'options' => [
+					'' => __('None', 'exdos-addons'),
+					'uppercase' => __('UPPERCASE', 'exdos-addons'),
+					'lowercase' => __('lowercase', 'exdos-addons'),
+					'capitalize' => __('Capitalize', 'exdos-addons'),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .title' => 'text-transform: {{VALUE}};',
+				],
 			]
 		);
 
@@ -156,27 +189,12 @@ class Exdos_header extends Widget_Base
 
 		?>
 
-
-		<div class="tp-section-title-wrapper ">
-			<?php if (!empty($settings['exdos_header_title'])): ?>
-				<h2 class="tp-section-title mb-20">
-					<?php echo exdos_addon_kses($settings['exdos_header_title']) ?>
-				</h2>
-			<?php endif; ?>
-			<?php if (!empty($settings['exdos_sub_text'])): ?>
-				<p>
-					<?php echo exdos_addon_kses($settings['exdos_sub_text']) ?>
-				</p>
-			<?php endif; ?>
-		</div>
-
-
-
-
-		<?php
-
-
+		<?php if (!empty($settings['image']['url'])): ?>
+			<div class="tp-about-img br-20 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.4s">
+				<img src="<?php echo esc_url($settings['image']['url']); ?>"
+					alt="<?php echo esc_attr($settings['image']['alt']); ?>" />
+			</div>
+			<?php
+		endif;
 	}
-
-
 }

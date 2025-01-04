@@ -9,13 +9,13 @@ if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
 
 /**
- * Elementor Hero
+ * Elementor Exdos_hero
  *
- * Elementor widget for hero.
+ * Elementor widget for Exdos_hero.
  *
  * @since 1.0.0
  */
-class Hero extends Widget_Base
+class Exdos_hero extends Widget_Base
 {
 
 	/**
@@ -43,7 +43,7 @@ class Hero extends Widget_Base
 	 */
 	public function get_title()
 	{
-		return __('Hero', 'exdos-addons');
+		return __('Exdos Hero', 'exdos-addons');
 	}
 
 	/**
@@ -110,7 +110,7 @@ class Hero extends Widget_Base
 	protected function _register_controls()
 	{
 		$this->register_tab_controls();
-		$this->register_style_tab_controls();
+		// $this->register_style_tab_controls();
 	}
 
 
