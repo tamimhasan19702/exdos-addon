@@ -4,6 +4,7 @@ namespace ElementorExdosAddon;
 
 use ElementorExdosAddon\PageSettings\Page_Settings;
 use ElementorExdosAddon\Widgets\Hero;
+use ElementorExdosAddon\Widgets\Exdos_Header;
 
 /**
  * Class Plugin
@@ -112,9 +113,11 @@ class Plugin
 	{
 		// Its is now safe to include Widgets files
 		require_once(__DIR__ . '/widgets/hero.php');
+		require_once(__DIR__ . '/widgets/exdos-header.php');
 
 		// Register Widgets
 		$widgets_manager->register(new Hero());
+		$widgets_manager->register(new Exdos_Header());
 	}
 
 	/**

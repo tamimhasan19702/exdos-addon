@@ -3,6 +3,7 @@ namespace ElementorExdosAddon\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
+use Elementor\Utils;
 
 if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
@@ -112,19 +113,6 @@ class Hero extends Widget_Base
 		$this->register_style_tab_controls();
 	}
 
-
-
-	// register tab controls
-	protected function register_tab_controls()
-	{
-		$this->hero_title();
-		$this->hero_button();
-		$this->hero_social();
-
-
-
-
-	}
 
 	protected function hero_title()
 	{
@@ -295,6 +283,48 @@ class Hero extends Widget_Base
 		$this->end_controls_section();
 	}
 
+	protected function hero_bg_image()
+	{
+		error_log('hero_bg_image method called'); // Log to PHP error log
+
+		$this->start_controls_section(
+			'hero_bg_image_section',
+			[
+				'label' => __('Hero Background Image', 'exdos-addons'),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'hero_bg_image',
+			[
+				'label' => __('Hero Background Image', 'exdos-addons'),
+				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => [
+					'url' => Utils::get_placeholder_image_src(),
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+
+
+	// register tab controls
+	protected function register_tab_controls()
+	{
+		$this->hero_title();
+		$this->hero_button();
+		$this->hero_social();
+		$this->hero_bg_image();
+
+
+	}
+
 	// register style tab controls
 	protected function register_style_tab_controls()
 	{
@@ -346,13 +376,18 @@ class Hero extends Widget_Base
 
 
 		<section class="tp-hero-area tp-hero-space tp-black-bg pt-265 pb-170 p-relative "
-			style="background-image: url(assets/img/shape/hero-1-bg-shape.png);">
+			style="background-image: <?php echo (!empty($settings['hero_bg_image']['url'])) ? 'url(' . esc_url($settings['hero_bg_image']['url']) . ')' : ''; ?>;">
 			<div class="tp-hero-shape">
-				<img class="tp-hero-shape-1 p-absolute" src="assets/img/shape/hero-1-ball-shape.png" alt="">
-				<img class="tp-hero-shape-2 p-absolute d-none d-xl-block" src="assets/img/shape/hero-1-large-shape.png" alt="">
-				<img class="tp-hero-shape-3 p-absolute" src="assets/img/shape/hero-sm-circle.png" alt="">
-				<img class="tp-hero-shape-4 p-absolute d-none d-md-block" src="assets/img/shape/hero-1-shape-2.png" alt="">
-				<img class="tp-hero-shape-5 p-absolute d-none d-md-block" src="assets/img/shape/hero-1-circle-3.png" alt="">
+				<img class="tp-hero-shape-1 p-absolute"
+					src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-ball-shape.png" alt="">
+				<img class="tp-hero-shape-2 p-absolute d-none d-xl-block"
+					src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-large-shape.png" alt="">
+				<img class="tp-hero-shape-3 p-absolute"
+					src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-sm-circle.png" alt="">
+				<img class="tp-hero-shape-4 p-absolute d-none d-md-block"
+					src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-shape-2.png" alt="">
+				<img class="tp-hero-shape-5 p-absolute d-none d-md-block"
+					src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-circle-3.png" alt="">
 			</div>
 			<div class="hero-info d-none d-xxl-flex">
 				<div class="hero-social">
@@ -436,21 +471,5 @@ class Hero extends Widget_Base
 
 	}
 
-	/**
-	 * Render the widget output in the editor.
-	 *
-	 * Written as a Backbone JavaScript template and used to generate the live preview.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @access protected
-	 */
-	protected function content_template()
-	{
-		?>
-		<div class="title">
-			{{{ settings.title }}}
-		</div>
-		<?php
-	}
+
 }
