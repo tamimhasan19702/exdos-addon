@@ -9,13 +9,13 @@ if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
 
 /**
- * Elementor exdos_button
+ * Elementor exdos_video_player
  *
- * Elementor widget for exdos_button.
+ * Elementor widget for exdos_video_player.
  *
  * @since 1.0.0
  */
-class Exdos_Image extends Widget_Base
+class Exdos_Video_Player extends Widget_Base
 {
 	/**
 	 * Retrieve the widget name.
@@ -28,7 +28,7 @@ class Exdos_Image extends Widget_Base
 	 */
 	public function get_name()
 	{
-		return 'Exdos Image';
+		return 'Exdos Video Player';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Exdos_Image extends Widget_Base
 	 */
 	public function get_title()
 	{
-		return __('Exdos Image', 'exdos-addons');
+		return __('Exdos Video Player', 'exdos-addons');
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Exdos_Image extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-image';
+		return 'eicon-video';
 	}
 
 	/**
@@ -109,26 +109,28 @@ class Exdos_Image extends Widget_Base
 		// $this->register_style_tab_controls();
 	}
 
-	protected function exdos_button_button()
+	protected function exdos_video_player()
 	{
 		$this->start_controls_section(
-			'image_section',
+			'video_section',
 			[
-				'label' => __('Image', 'exdos-addons'),
+				'label' => __('Video Player', 'exdos-addons'),
 			]
 		);
 
 		$this->add_control(
-			'image',
+			'video_link',
 			[
-				'label' => __('Image', 'exdos-addons'),
-				'type' => Controls_Manager::MEDIA,
-				'dynamic' => [
-					'active' => true,
-				],
+				'label' => esc_html__('Video Link', 'exdos-addons'),
+				'type' => Controls_Manager::URL,
+				'options' => ['url', 'is_external', 'nofollow'],
 				'default' => [
-					'url' => Utils::get_placeholder_image_src(),
+					'url' => '',
+					'is_external' => false,
+					'nofollow' => false,
+					'placeholder' => 'https://your-video-link.com',
 				],
+				'label_block' => true,
 			]
 		);
 
@@ -138,7 +140,7 @@ class Exdos_Image extends Widget_Base
 	// register tab controls
 	protected function register_tab_controls()
 	{
-		$this->exdos_button_button();
+		$this->exdos_video_player();
 	}
 
 	// register style tab controls
@@ -185,16 +187,25 @@ class Exdos_Image extends Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
-
+		$this->add_render_attribute('button_arg', 'class', 'popup-video');
+		$this->add_link_attributes('button_arg', $settings['video_link']);
 
 		?>
 
-<?php if (!empty($settings['image']['url'])): ?>
-<div class="tp-about-img br-20 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.4s">
-    <img style="border-radius: 20px !important;" src="<?php echo esc_url($settings['image']['url']); ?>"
-        alt="<?php echo esc_attr($settings['image']['alt']); ?>" />
+
+
+<?php if (!empty($settings['video_link']['url'])): ?>
+<div class="tp-about-video-info d-flex align-items-center mb-27">
+    <div class="tp-about-video-icon mr-15">
+        <a <?php echo $this->get_render_attribute_string('button_arg'); ?>><img
+                src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/shape/play.svg') ?>" alt="" /></a>
+    </div>
+    <h4 class="m-0">Intro video</h4>
 </div>
+
+<?php endif; ?>
+
+
 <?php
-		endif;
 	}
 }

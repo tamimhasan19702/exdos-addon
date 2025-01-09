@@ -7,6 +7,8 @@ use ElementorExdosAddon\Widgets\Exdos_Hero;
 use ElementorExdosAddon\Widgets\Exdos_Header;
 use ElementorExdosAddon\Widgets\Exdos_Button;
 use ElementorExdosAddon\Widgets\Exdos_Image;
+use ElementorExdosAddon\Widgets\Exdos_Video_Player;
+use ElementorExdosAddon\Widgets\Exdos_Shape;
 
 /**
  * Class Plugin
@@ -118,12 +120,17 @@ class Plugin
 		require_once(__DIR__ . '/widgets/exdos-header.php');
 		require_once(__DIR__ . '/widgets/exdos-button.php');
 		require_once(__DIR__ . '/widgets/exdos-image.php');
+		require_once(__DIR__ . '/widgets/exdos-video-player.php');
+		require_once(__DIR__ . '/widgets/exdos-shape.php');
 
 		// Register Widgets
 		$widgets_manager->register(new Exdos_Hero());
 		$widgets_manager->register(new Exdos_Header());
 		$widgets_manager->register(new Exdos_Button());
 		$widgets_manager->register(new Exdos_Image());
+		$widgets_manager->register(new Exdos_Video_Player());
+		$widgets_manager->register(new Exdos_Shape());
+
 	}
 
 	/**

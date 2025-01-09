@@ -9,13 +9,13 @@ if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
 
 /**
- * Elementor exdos_button
+ * Elementor exdos_shape
  *
- * Elementor widget for exdos_button.
+ * Elementor widget for exdos_shape.
  *
  * @since 1.0.0
  */
-class Exdos_Image extends Widget_Base
+class Exdos_Shape extends Widget_Base
 {
 	/**
 	 * Retrieve the widget name.
@@ -28,7 +28,7 @@ class Exdos_Image extends Widget_Base
 	 */
 	public function get_name()
 	{
-		return 'Exdos Image';
+		return 'Exdos Shape';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Exdos_Image extends Widget_Base
 	 */
 	public function get_title()
 	{
-		return __('Exdos Image', 'exdos-addons');
+		return __('Exdos Shape', 'exdos-addons');
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Exdos_Image extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-image';
+		return 'eicon-shape';
 	}
 
 	/**
@@ -109,17 +109,19 @@ class Exdos_Image extends Widget_Base
 		// $this->register_style_tab_controls();
 	}
 
-	protected function exdos_button_button()
+	protected function exdos_shapes()
 	{
 		$this->start_controls_section(
-			'image_section',
+			'shape_image_section',
 			[
-				'label' => __('Image', 'exdos-addons'),
+				'label' => __('Shape Image', 'exdos-addons'),
 			]
 		);
 
-		$this->add_control(
-			'image',
+		$repeater = new \Elementor\Repeater();
+
+		$repeater->add_control(
+			'shape_image',
 			[
 				'label' => __('Image', 'exdos-addons'),
 				'type' => Controls_Manager::MEDIA,
@@ -132,13 +134,23 @@ class Exdos_Image extends Widget_Base
 			]
 		);
 
+		$this->add_control(
+			'shape_images',
+			[
+				'label' => __('Shape Images', 'exdos-addons'),
+				'type' => Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'title_field' => '{{{ shape_image.url }}}',
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
 	// register tab controls
 	protected function register_tab_controls()
 	{
-		$this->exdos_button_button();
+		$this->exdos_shapes();
 	}
 
 	// register style tab controls
@@ -186,15 +198,12 @@ class Exdos_Image extends Widget_Base
 	{
 		$settings = $this->get_settings_for_display();
 
-
-		?>
-
-<?php if (!empty($settings['image']['url'])): ?>
-<div class="tp-about-img br-20 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.4s">
-    <img style="border-radius: 20px !important;" src="<?php echo esc_url($settings['image']['url']); ?>"
-        alt="<?php echo esc_attr($settings['image']['alt']); ?>" />
-</div>
+		// render all images
+		foreach ($settings['shapes'] as $image) {
+			?>
+<img class="tp-about-shape-<?= esc_attr($image['_id']) ?> p-absolute" src="<?= esc_url($image['shape_image']['url']) ?>"
+    alt="" />
 <?php
-		endif;
+		}
 	}
 }
