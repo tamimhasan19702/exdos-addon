@@ -375,27 +375,27 @@ class Exdos_hero extends Widget_Base
 		?>
 
 
-		<section class="tp-hero-area tp-hero-space tp-black-bg pt-265 pb-170 p-relative "
-			style="background-image: <?php echo (!empty($settings['hero_bg_image']['url'])) ? 'url(' . esc_url($settings['hero_bg_image']['url']) . ')' : ''; ?>;">
-			<div class="tp-hero-shape">
-				<img class="tp-hero-shape-1 p-absolute"
-					src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-ball-shape.png" alt="">
-				<img class="tp-hero-shape-2 p-absolute d-none d-xl-block"
-					src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-large-shape.png" alt="">
-				<img class="tp-hero-shape-3 p-absolute"
-					src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-sm-circle.png" alt="">
-				<img class="tp-hero-shape-4 p-absolute d-none d-md-block"
-					src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-shape-2.png" alt="">
-				<img class="tp-hero-shape-5 p-absolute d-none d-md-block"
-					src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-circle-3.png" alt="">
-			</div>
-			<div class="hero-info d-none d-xxl-flex">
-				<div class="hero-social">
-					<?php if (!empty($settings['social_header'])): ?>
-						<span><?php echo exdos_addon_kses($settings['social_header']) ?></span>
-					<?php endif; ?>
+<section class="tp-hero-area tp-hero-space tp-black-bg pt-265 pb-170 p-relative"
+    style="background-image: <?php echo (!empty($settings['hero_bg_image']['url'])) ? 'url(' . esc_url($settings['hero_bg_image']['url']) . ')' : ''; ?>;">
+    <div class="tp-hero-shape">
+        <img class="tp-hero-shape-1 p-absolute"
+            src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-ball-shape.png" alt="">
+        <img class="tp-hero-shape-2 p-absolute d-none d-xl-block"
+            src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-large-shape.png" alt="">
+        <img class="tp-hero-shape-3 p-absolute"
+            src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-sm-circle.png" alt="">
+        <img class="tp-hero-shape-4 p-absolute d-none d-md-block"
+            src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-shape-2.png" alt="">
+        <img class="tp-hero-shape-5 p-absolute d-none d-md-block"
+            src="<?php echo esc_url(get_template_directory_uri()) ?>/assets/img/shape/hero-1-circle-3.png" alt="">
+    </div>
+    <div class="hero-info d-none d-xxl-flex">
+        <div class="hero-social">
+            <?php if (!empty($settings['social_header'])): ?>
+            <span><?php echo exdos_addon_kses($settings['social_header']) ?></span>
+            <?php endif; ?>
 
-					<?php
+            <?php
 					if (!empty($settings['social_list'])): // Ensure you're checking the correct key
 						$social_links = []; // Initialize an array to hold the links
 			
@@ -431,43 +431,43 @@ class Exdos_hero extends Widget_Base
 					?>
 
 
-				</div>
-				<?php if (!empty($settings['side_text'])): ?>
-					<div class="hero-info-text">
-						<span><?php echo exdos_addon_kses($settings['side_text']) ?></span>
-					</div>
-				<?php endif; ?>
-			</div>
-			<div class="container">
-				<div class="tp-hero p-relative z-index-11">
-					<div class="mb-30">
-						<?php if (!empty($settings['Main_title'])): ?>
-							<h1 class="tp-hero-title wow img-custom-anim-left" data-wow-duration="1.5s" data-wow-delay="0.1s">
-								<?php echo exdos_addon_kses($settings['Main_title']) ?>
-							</h1>
-						<?php endif; ?>
-						<?php if (!empty($settings['Main_Title_2'])): ?>
-							<h1 class="tp-hero-title wow img-custom-anim-right" data-wow-duration="1.5s" data-wow-delay="0.4s">
-								<?php echo exdos_addon_kses($settings['Main_Title_2']) ?>
-							</h1>
-						<?php endif; ?>
-					</div>
-					<?php if (!empty($settings['button_text'])): ?>
-						<div class="tp-hero-btn wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.9s">
-							<a <?php $this->print_render_attribute_string('button_arg'); ?>>
-								<span class="tp-btn-wrap">
-									<span class="tp-btn-y-1"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
-									<span class="tp-btn-y-2"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
-								</span>
-								<i></i>
-							</a>
-						</div>
-					<?php endif; ?>
-				</div>
-			</div>
-		</section>
+        </div>
+        <?php if (!empty($settings['side_text'])): ?>
+        <div class="hero-info-text">
+            <span><?php echo exdos_addon_kses($settings['side_text']) ?></span>
+        </div>
+        <?php endif; ?>
+    </div>
+    <div class="container">
+        <div class="tp-hero p-relative z-index-11">
+            <div class="mb-30">
+                <?php if (!empty($settings['Main_title'])): ?>
+                <h1 class="tp-hero-title wow img-custom-anim-left" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                    <?php echo exdos_addon_kses($settings['Main_title']) ?>
+                </h1>
+                <?php endif; ?>
+                <?php if (!empty($settings['Main_Title_2'])): ?>
+                <h1 class="tp-hero-title wow img-custom-anim-right" data-wow-duration="1.5s" data-wow-delay="0.4s">
+                    <?php echo exdos_addon_kses($settings['Main_Title_2']) ?>
+                </h1>
+                <?php endif; ?>
+            </div>
+            <?php if (!empty($settings['button_text'])): ?>
+            <div class="tp-hero-btn wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.9s">
+                <a <?php $this->print_render_attribute_string('button_arg'); ?>>
+                    <span class="tp-btn-wrap">
+                        <span class="tp-btn-y-1"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
+                        <span class="tp-btn-y-2"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
+                    </span>
+                    <i></i>
+                </a>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
 
-		<?php
+<?php
 
 	}
 

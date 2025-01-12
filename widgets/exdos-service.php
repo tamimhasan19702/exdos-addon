@@ -9,13 +9,13 @@ if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
 
 /**
- * Elementor exdos_shape
+ * Elementor exdos_service
  *
- * Elementor widget for exdos_shape.
+ * Elementor widget for exdos_service.
  *
  * @since 1.0.0
  */
-class Exdos_Shape extends Widget_Base
+class Exdos_Service extends Widget_Base
 {
 	/**
 	 * Retrieve the widget name.
@@ -28,7 +28,7 @@ class Exdos_Shape extends Widget_Base
 	 */
 	public function get_name()
 	{
-		return 'Exdos Shape';
+		return 'Exdos Service';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Exdos_Shape extends Widget_Base
 	 */
 	public function get_title()
 	{
-		return __('Exdos Shape', 'exdos-addons');
+		return __('Exdos Service', 'exdos-addons');
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Exdos_Shape extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-shape';
+		return 'eicon-kit-details';
 	}
 
 	/**
@@ -109,55 +109,38 @@ class Exdos_Shape extends Widget_Base
 		// $this->register_style_tab_controls();
 	}
 
-	protected function exdos_shapes()
+	protected function exdos_button_button()
 	{
 		$this->start_controls_section(
-			'shape_image_section',
+			'button_section',
 			[
-				'label' => __('Shape Image', 'exdos-addons'),
+				'label' => __('Button', 'exdos-addons'),
 			]
 		);
 
 		$this->add_control(
-			'shape_image_1',
+			'button_text',
 			[
-				'label' => __('Shape 1', 'exdos-addons'),
-				'type' => Controls_Manager::MEDIA,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-				],
+				'label' => __('Button Text', 'exdos-addons'),
+				'type' => Controls_Manager::TEXT,
+				'label_block' => true,
+				'default' => __('Discover More', 'exdos-addons'),
 			]
 		);
 
 		$this->add_control(
-			'shape_image_2',
+			'button_link',
 			[
-				'label' => __('Shape 2', 'exdos-addons'),
-				'type' => Controls_Manager::MEDIA,
-				'dynamic' => [
-					'active' => true,
-				],
+				'label' => esc_html__('Button Link', 'exdos-addons'),
+				'type' => Controls_Manager::URL,
+				'options' => ['url', 'is_external', 'nofollow'],
 				'default' => [
 					'url' => '',
+					'is_external' => false,
+					'nofollow' => false,
+					'placeholder' => 'https://your-link.com',
 				],
-			]
-		);
-
-		$this->add_control(
-			'shape_image_3',
-			[
-				'label' => __('Shape 3', 'exdos-addons'),
-				'type' => Controls_Manager::MEDIA,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-				],
-				
+				'label_block' => true,
 			]
 		);
 
@@ -167,7 +150,7 @@ class Exdos_Shape extends Widget_Base
 	// register tab controls
 	protected function register_tab_controls()
 	{
-		$this->exdos_shapes();
+		$this->exdos_button_button();
 	}
 
 	// register style tab controls
@@ -214,28 +197,38 @@ class Exdos_Shape extends Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
+		$this->add_render_attribute('button_arg', 'class', 'tp-btn');
+		$this->add_link_attributes('button_arg', $settings['button_link']);
 
-		// render all images
 		?>
 
-<div class="tp-about-shape">
-    <?php if(!empty($settings['shape_image_1']['url'])):?>
-    <img class="tp-about-shape-1 p-absolute d-none d-md-block" src="<?php echo $settings['shape_image_1']['url']; ?>"
-        alt="<?php echo $settings['shape_image_1']['alt']; ?>" />
-    <?php endif;?>
-
-    <?php if(!empty($settings['shape_image_2']['url'])):?>
-    <img class="tp-about-shape-2 p-absolute" src="<?php echo $settings['shape_image_2']['url']; ?>"
-        alt="<?php echo $settings['shape_image_2']['alt']; ?>" />
-    <?php endif;?>
-
-    <?php if(!empty($settings['shape_image_3']['url'])):?>
-    <img class="tp-about-shape-3 p-absolute" src="<?php echo $settings['shape_image_3']['url']; ?>"
-        alt="<?php echo $settings['shape_image_3']['alt']; ?>" />
-    <?php endif;?>
+<div class="tpservices br-24 mb-30 wow tpFadeInUp" data-wow-duration="1.5s" data-wow-delay="0.2s">
+    <div class="tpservices__icon mb-25">
+        <span><i class="flaticon-concentration"></i></span>
+    </div>
+    <div class="tpservices__text">
+        <h3 class="tpservices__title mb-15">
+            <a href="services-details.html">Visual identity</a>
+        </h3>
+        <p>
+            Perfs ipsum ultrices sollicitudin iaculis platea facilisi
+        </p>
+        <div class="tpservices__list">
+            <ul>
+                <li>Branding Design</li>
+                <li>Research & Testing</li>
+                <li>Interion Design</li>
+                <li>Content Writing</li>
+            </ul>
+        </div>
+    </div>
+    <div class="tpservices__btn mt-30">
+        <a href="services-details.html" class="tp-sv-btn br-5">Read More <i class="far fa-arrow-right"></i></a>
+    </div>
 </div>
 
-<?php 
 
+
+<?php
 	}
 }

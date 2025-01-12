@@ -56,7 +56,7 @@ class Exdos_Video_Player extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-video';
+		return 'eicon-video-camera';
 	}
 
 	/**
@@ -134,6 +134,18 @@ class Exdos_Video_Player extends Widget_Base
 			]
 		);
 
+
+
+		$this->add_control(
+			'text',
+			[
+				'label' => __('Text', 'exdos-addons'),
+				'type' => Controls_Manager::TEXT,
+				'label_block' => true,
+				'default' => __('Intro Video', 'exdos-addons'),
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -200,7 +212,9 @@ class Exdos_Video_Player extends Widget_Base
         <a <?php echo $this->get_render_attribute_string('button_arg'); ?>><img
                 src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/shape/play.svg') ?>" alt="" /></a>
     </div>
-    <h4 class="m-0">Intro video</h4>
+    <?php if (!empty($settings['text'])): ?>
+    <h4 class="m-0"><?php echo exdos_addon_kses($settings['text']) ?></h4>
+    <?php endif; ?>
 </div>
 
 <?php endif; ?>
