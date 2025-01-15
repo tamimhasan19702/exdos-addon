@@ -109,7 +109,7 @@ class Exdos_Project_Tab extends Widget_Base
 		// $this->register_style_tab_controls();
 	}
 
-	protected function exdos_button_button()
+	protected function exdos_project_tab()
 	{
 		$this->start_controls_section(
 			'exdos_project_tab_section',
@@ -160,17 +160,17 @@ class Exdos_Project_Tab extends Widget_Base
 		$this->add_control(
 			'button_text',
 			[
-				'label' => __('Button Text', 'exdos-addons'),
+				'label' => __('Project Button Text', 'exdos-addons'),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => __('Discover More', 'exdos-addons'),
+				'default' => __('All Project', 'exdos-addons'),
 			]
 		);
 
 		$this->add_control(
 			'button_link',
 			[
-				'label' => esc_html__(' Button Link', 'exdos-addons'),
+				'label' => esc_html__('Project Button Link', 'exdos-addons'),
 				'type' => Controls_Manager::URL,
 				'options' => ['url', 'is_external', 'nofollow'],
 				'default' => [
@@ -189,7 +189,7 @@ class Exdos_Project_Tab extends Widget_Base
 	// register tab controls
 	protected function register_tab_controls()
 	{
-		$this->exdos_button_button();
+		$this->exdos_project_tab();
 	}
 
 	// register style tab controls
@@ -236,8 +236,7 @@ class Exdos_Project_Tab extends Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
-		$this->add_render_attribute('button_arg', 'class', 'tp-btn');
-		$this->add_link_attributes('button_arg', $settings['button_link']);
+		
 
 		?>
 
@@ -278,19 +277,27 @@ class Exdos_Project_Tab extends Widget_Base
                     id="nav-home-<?php echo esc_attr($key) ; ?>" role="tabpanel"
                     aria-labelledby="nav-home-tab-<?php echo esc_attr($key) ; ?>" tabindex="0">
                     <div class="tp-project-tab-thumb">
-                        <a class="popup-image" href="assets/img/project/project-tab-1.jpg"><img
-                                src="assets/img/project/project-tab-1.jpg" alt="" /></a>
+                        <a class="popup-image br-20!important "
+                            href="<?php echo esc_url($project['project_image']['url']); ?>"><img
+                                src="<?php echo esc_url($project['project_image']['url']); ?>" alt=""
+                                style="border-radius: 20px !important;" /></a>
                     </div>
                 </div>
+
+                <?php endforeach;?>
 
             </div>
         </div>
     </div>
 
 </div>
+<?php if(!empty($settings['button_text'])):?>
 <div class="tp-project-tab-btn text-center mt-80 z-index-11 p-relative">
-    <a class="tp-btn-circle" href="portfolio.html">All project</a>
+    <a class="tp-btn-circle" href="<?php echo esc_url($settings['button_link']['url']); ?>">
+        <?php echo exdos_addon_kses($settings['button_text']); ?>
+    </a>
 </div>
+<?php endif;?>
 
 
 <?php
