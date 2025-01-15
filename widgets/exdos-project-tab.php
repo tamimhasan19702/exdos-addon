@@ -9,13 +9,13 @@ if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
 
 /**
- * Elementor exdos_service
+ * Elementor exdos_project_tab
  *
- * Elementor widget for exdos_service.
+ * Elementor widget for exdos_project_tab.
  *
  * @since 1.0.0
  */
-class Exdos_Service extends Widget_Base
+class Exdos_Project_Tab extends Widget_Base
 {
 	/**
 	 * Retrieve the widget name.
@@ -28,7 +28,7 @@ class Exdos_Service extends Widget_Base
 	 */
 	public function get_name()
 	{
-		return 'Exdos Service';
+		return 'Exdos Project Tab';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Exdos_Service extends Widget_Base
 	 */
 	public function get_title()
 	{
-		return __('Exdos Service', 'exdos-addons');
+		return __('Exdos Project Tab', 'exdos-addons');
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Exdos_Service extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-kit-details';
+		return 'eicon-posts-group';
 	}
 
 	/**
@@ -112,76 +112,65 @@ class Exdos_Service extends Widget_Base
 	protected function exdos_button_button()
 	{
 		$this->start_controls_section(
-			'button_section',
+			'exdos_project_tab_section',
 			[
-				'label' => __('Button', 'exdos-addons'),
+				'label' => __('Exdos Project Tab', 'exdos-addons'),
 			]
 		);
 
-		$this->add_control(
-			'icon',
+		$repeater = new \Elementor\Repeater();
+
+		$repeater->add_control(
+			'project_text',
 			[
-				'label' => __('Icon', 'exdos-addons'),
-				'type' => Controls_Manager::ICONS,
+				'label' => __(' Project Text', 'exdos-addons'),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => __('List Item', 'exdos-addons'),
+				'label_block' => true,
+			]
+		);
+
+		$repeater->add_control(
+			'project_image',
+			[
+				'label' => __('Project Image', 'exdos-addons'),
+				'type' => \Elementor\Controls_Manager::MEDIA,
 				'default' => [
-					'value' => 'fas fa-star',
-					'library' => 'fa-solid',
+					'url' => \Elementor\Utils::get_placeholder_image_src(),
 				],
-				
 			]
 		);
 
 		$this->add_control(
-			'header_text',
+			'project_list',
 			[
-				'label' => __('Header Text', 'exdos-addons'),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => __('Header Text', 'exdos-addons'),
-			]
-		);
-
-		$this->add_control(
-			'subtitle_text',
-			[
-				'label' => __('Subtitle Text', 'exdos-addons'),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => __('Subtitle Text', 'exdos-addons'),
-			]
-		);
-
-		$this->add_control(
-			'list',
-			[
-				'label' => __('List', 'exdos-addons'),
-				'type' => Controls_Manager::REPEATER,
-				'fields' => [
+				'label' => __('Project List', 'exdos-addons'),
+				'type' => \Elementor\Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'default' => [
 					[
-						'name' => 'list_item',
-						'label' => __('List Item', 'exdos-addons'),
-						'type' => Controls_Manager::TEXT,
-						'default' => __('List Item', 'exdos-addons'),
+						'list_text' => __('Project Item', 'exdos-addons'),
 					],
 				],
-				'title_field' => '{{{ list_item }}}',
+				'title_field' => '{{{ list_text }}}',
 			]
 		);
 
+		
 		$this->add_control(
 			'button_text',
 			[
 				'label' => __('Button Text', 'exdos-addons'),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => __('Button Text', 'exdos-addons'),
+				'default' => __('Discover More', 'exdos-addons'),
 			]
 		);
 
 		$this->add_control(
 			'button_link',
 			[
-				'label' => esc_html__('Button Link', 'exdos-addons'),
+				'label' => esc_html__(' Button Link', 'exdos-addons'),
 				'type' => Controls_Manager::URL,
 				'options' => ['url', 'is_external', 'nofollow'],
 				'default' => [
@@ -194,7 +183,6 @@ class Exdos_Service extends Widget_Base
 			]
 		);
 
-		
 		$this->end_controls_section();
 	}
 
@@ -250,52 +238,60 @@ class Exdos_Service extends Widget_Base
 		$settings = $this->get_settings_for_display();
 		$this->add_render_attribute('button_arg', 'class', 'tp-btn');
 		$this->add_link_attributes('button_arg', $settings['button_link']);
-	
-		// Check if the icon is set and render it
-		$icon_html = '';
-		if (!empty($settings['icon']['value'])) {
-			$icon_html = '<i class="' . esc_attr($settings['icon']['value']) . '"></i>';
-		}
-	
+
 		?>
 
-<div class="tpservices br-24 mb-30 wow tpFadeInUp" data-wow-duration="1.5s" data-wow-delay="0.2s">
-    <?php  if(!empty($settings['icon'])):?>
-    <div class="tpservices__icon mb-25">
-        <span><?php echo $icon_html; ?></span>
-    </div>
-    <?php endif;?>
-    <div class="tpservices__text">
-        <?php if(!empty($settings['header_text'])):?>
-        <h3 class="tpservices__title mb-15">
-            <a href="<?php echo esc_url($settings['button_link']['url']); ?>">
-                <?php echo exdos_addon_kses($settings['header_text']); ?>
-            </a>
-        </h3>
-        <?php endif;?>
-        <?php if(!empty($settings['subtitle_text'])):?>
-        <p>
-            <?php echo exdos_addon_kses($settings['subtitle_text']); ?>
-        </p>
-        <?php endif;?>
-        <?php if(!empty($settings['list'])):?>
-        <div class="tpservices__list">
-            <ul>
-                <?php foreach ($settings['list'] as $list) : ?>
-                <li><?php echo exdos_addon_kses($list['list_item']); ?></li>
-                <?php endforeach; ?>
-            </ul>
+
+
+<div class="row gx-0">
+
+    <div class="col-lg-6">
+        <div class="tp-project-tab-wraper">
+            <nav>
+                <div class="tp-project-tab" id="nav-tab" role="tablist">
+
+                    <?php foreach($settings['project_list'] as $key => $project):
+						$active = $key == 0 ? 'active' : '';
+						?>
+                    <button class="nav-links <?php echo esc_attr($active) ; ?>"
+                        id="nav-home-tab-<?php echo esc_attr($key) ; ?>" data-bs-toggle="tab"
+                        data-bs-target="#nav-home-<?php echo esc_attr($key) ; ?>" type="button" role="tab"
+                        aria-controls="nav-home-<?php echo esc_attr($key) ; ?>" aria-selected="true">
+                        <?php echo esc_html($project['project_text']);?>
+                    </button>
+                    <?php endforeach;?>
+
+                </div>
+            </nav>
         </div>
-        <?php endif;?>
     </div>
-    <?php if(!empty($settings['button_text'])):?>
-    <div class="tpservices__btn mt-30">
-        <a href="<?php echo esc_url($settings['button_link']['url']); ?>" class="tp-sv-btn br-5">
-            <?php echo exdos_addon_kses($settings['button_text']); ?> <i class="far fa-arrow-right"></i>
-        </a>
+
+    <div class="col-lg-6">
+        <div class="tp-project-tab-content pl-30 text-end mt-50">
+            <div class="tab-content" id="nav-tabContent">
+
+                <?php foreach($settings['project_list'] as $key => $project):
+						$active = $key == 0 ? ' show active' : '';
+						?>
+
+                <div class="tab-pane fade  <?php echo esc_attr($active) ; ?>"
+                    id="nav-home-<?php echo esc_attr($key) ; ?>" role="tabpanel"
+                    aria-labelledby="nav-home-tab-<?php echo esc_attr($key) ; ?>" tabindex="0">
+                    <div class="tp-project-tab-thumb">
+                        <a class="popup-image" href="assets/img/project/project-tab-1.jpg"><img
+                                src="assets/img/project/project-tab-1.jpg" alt="" /></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-    <?php endif;?>
+
 </div>
+<div class="tp-project-tab-btn text-center mt-80 z-index-11 p-relative">
+    <a class="tp-btn-circle" href="portfolio.html">All project</a>
+</div>
+
 
 <?php
 	}
