@@ -13,6 +13,7 @@ use ElementorExdosAddon\Widgets\Exdos_Service;
 use ElementorExdosAddon\Widgets\Exdos_Newsletter;
 use ElementorExdosAddon\Widgets\Exdos_Project_Tab;
 use ElementorExdosAddon\Widgets\Exdos_Testimonial;
+use ElementorExdosAddon\Widgets\Exdos_Brand;
 
 /**
  * Class Plugin
@@ -130,6 +131,7 @@ class Plugin
 		require_once(__DIR__ . '/widgets/exdos-newsletter.php');
 		require_once(__DIR__ . '/widgets/exdos-project-tab.php');
 		require_once(__DIR__ . '/widgets/exdos-testimonial.php');
+		require_once(__DIR__ . '/widgets/exdos-brand.php');
 
 		// Register Widgets
 		$widgets_manager->register(new Exdos_Hero());
@@ -142,6 +144,7 @@ class Plugin
 		$widgets_manager->register(new Exdos_Newsletter());
 		$widgets_manager->register(new Exdos_Project_Tab());
 		$widgets_manager->register(new Exdos_Testimonial());
+		$widgets_manager->register(new Exdos_Brand());
 
 	}
 

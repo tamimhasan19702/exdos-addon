@@ -84,7 +84,7 @@ class Exdos_Testimonial extends Widget_Base
 	 * Used to set scripts dependencies required to run the widget.
 	 *
 	 * @since 1.0.0
-	 *
+	 *P
 	 * @access public
 	 *
 	 * @return array Widget scripts dependencies.
