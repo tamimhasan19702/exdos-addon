@@ -15,6 +15,7 @@ use ElementorExdosAddon\Widgets\Exdos_Project_Tab;
 use ElementorExdosAddon\Widgets\Exdos_Testimonial;
 use ElementorExdosAddon\Widgets\Exdos_Brand;
 use ElementorExdosAddon\Widgets\Exdos_Team;
+use ElementorExdosAddon\Widgets\Exdos_Timeline;
 
 /**
  * Class Plugin
@@ -134,6 +135,7 @@ class Plugin
 		require_once(__DIR__ . '/widgets/exdos-testimonial.php');
 		require_once(__DIR__ . '/widgets/exdos-brand.php');
 		require_once(__DIR__ . '/widgets/exdos-team.php');
+		require_once(__DIR__ . '/widgets/exdos-timeline.php');
 
 
 		// Register Widgets
@@ -149,6 +151,7 @@ class Plugin
 		$widgets_manager->register(new Exdos_Testimonial());
 		$widgets_manager->register(new Exdos_Brand());
 		$widgets_manager->register(new Exdos_Team());
+		$widgets_manager->register(new Exdos_Timeline());
 
 	}
 

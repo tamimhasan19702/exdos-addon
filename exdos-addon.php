@@ -2,9 +2,8 @@
 /**
  * Plugin Name: Exdos addon
  * Description: This is a mandetory plugin for exdos theme
- * Plugin URI:  https://elementor.com/
- * Version:     1.2.1
- * Author:      Author Name
+ * Version:     1.0.0
+ * Author:     Tareq Monower
  * Author URI:  https://elementor.com/
  * Text Domain: exdos-addon
  * Elementor tested up to: 3.5.0
