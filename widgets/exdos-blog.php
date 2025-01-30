@@ -109,58 +109,129 @@ class Exdos_Blog extends Widget_Base
 		// $this->register_style_tab_controls();
 	}
 
-	protected function exdos_blog(){
-
-$this->start_controls_section(
+	protected function exdos_blog() {
+		$this->start_controls_section(
 			'section_exdos_blog',
 			[
 				'label' => __('Exdos Blog', 'exdos-addons'),
 			]
 		);
 
+		// Add control for number of posts
 		$this->add_control(
-			'layout_type',
+			'number_of_posts',
 			[
-				'label' => __('Layout Type', 'exdos-addons'),
-				'type' => \Elementor\Controls_Manager::SELECT,
-				'options' => [
-					1 => __('Layout 1', 'exdos-addons'),
-					2 => __('Layout 2', 'exdos-addons'),
-				],
-				'default' => 1,
+				'label' => esc_html__('Number of Posts', 'exdos-addons'),
+				'type' => Controls_Manager::NUMBER,
+				'min' => 1,
+				'step' => 1,
+				'default' => 3,
 			]
 		);
-		
-
-
-		
-
-		$repeater = new \Elementor\Repeater();
-
-		$repeater->add_control(
-			'brand_image',
-			[
-				'label' => __('Brand Image', 'exdos-addons'),
-				'type' => \Elementor\Controls_Manager::MEDIA,
-				'default' => [
-					'url' => \Elementor\Utils::get_placeholder_image_src(),
-				],
-			]
-		);
-
-		$this->add_control(
-			'brand_images',
-			[
-				'label' => __('Brand Images', 'exdos-addons'),
-				'type' => \Elementor\Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),
-				'title_field' => '{{{ brand_image.url }}}',
-			]
-		);
-
 	
-
+		$this->add_control(
+			'include_categories',
+			[
+				'label' => esc_html__('Include Categories', 'exdos-addons'),
+				'type' => Controls_Manager::SELECT2,
+				'label_block' => true,
+				'multiple' => true,
+				'options' => $this->get_blog_categories(), // Fetch categories dynamically
+				'default' => [],
+			]
+		);
+	
+		// Add SELECT2 control for excluding categories
+		$this->add_control(
+			'exclude_categories',
+			[
+				'label' => esc_html__('Exclude Categories', 'exdos-addons'),
+				'type' => Controls_Manager::SELECT2,
+				'label_block' => true,
+				'multiple' => true,
+				'options' => $this->get_blog_categories(), // Fetch categories dynamically
+				'default' => [],
+			]
+		);
+	
+		
+		$this->add_control(
+			'include_posts',
+			[
+				'label' => esc_html__('Include Posts', 'exdos-addons'),
+				'type' => Controls_Manager::SELECT2,
+				'label_block' => true,
+				'multiple' => true,
+				'options' => $this->get_blog_posts(), // Fetch posts dynamically
+				'default' => [],
+			]
+		);
+	
+		// Add SELECT2 control for excluding posts
+		$this->add_control(
+			'exclude_posts',
+			[
+				'label' => esc_html__('Exclude Posts', 'exdos-addons'),
+				'type' => Controls_Manager::SELECT2,
+				'label_block' => true,
+				'multiple' => true,
+				'options' => $this->get_blog_posts(), // Fetch posts dynamically
+				'default' => [],
+			]
+		);
+	
+		$this->add_control(
+			'order',
+			[
+				'label' => esc_html__('Order', 'exdos-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'DESC',
+				'options' => [
+					'ASC' => __('Ascending', 'exdos-addons'),
+					'DESC' => __('Descending', 'exdos-addons'),
+					'RAND' => __('Random', 'exdos-addons'),
+				],
+			]
+		);
+	
+		// Add control for order by
+		$this->add_control(
+			'orderby',
+			[
+				'label' => esc_html__('Order By', 'exdos-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'date',
+				'options' => [
+					'date' => __('Date', 'exdos-addons'),
+					'title' => __('Title', 'exdos-addons'),
+					'modified' => __('Modified Date', 'exdos-addons'),
+					'rand' => __('Random', 'exdos-addons'),
+				],
+			]
+		);
+	
+	
 		$this->end_controls_section();
+	}
+	
+	// Function to get blog categories
+	private function get_blog_categories() {
+		$categories = get_categories();
+		$options = [];
+		foreach ($categories as $category) {
+			$options[$category->term_id] = $category->name;
+		}
+		return $options;
+	}
+
+
+	private function get_blog_posts() {
+		$posts = get_posts(['numberposts' => -1]); // Get all posts
+		$options = [];
+		foreach ($posts as $post) {
+			$options[$post->ID] = $post->post_title;
+		}
+		return $options;
 	}
 
 	// register tab controls
@@ -211,82 +282,91 @@ $this->start_controls_section(
 	 * @access protected
 	 */
 	protected function render()
-	{
-		$settings = $this->get_settings_for_display();
-		
+{
+	$settings = $this->get_settings_for_display();
 
-		?>
+    // Prepare the query arguments
+    $args = array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'posts_per_page' => !empty($settings['number_of_posts']) ? $settings['number_of_posts'] : 3,
+		'orderby' => $settings['orderby'], 
+        'order' => $settings['order'], 
+    );
 
+    // Check if categories are included
+    if (!empty($settings['include_categories'])) {
+        $args['tax_query'][] = array(
+            'taxonomy' => 'category',
+            'field'    => 'term_id',
+            'terms'    => $settings['include_categories'],
+            'operator' => 'IN',
+        );
+    }
+
+    // Check if categories are excluded
+    if (!empty($settings['exclude_categories'])) {
+        $args['tax_query'][] = array(
+            'taxonomy' => 'category',
+            'field'    => 'term_id',
+            'terms'    => $settings['exclude_categories'],
+            'operator' => 'NOT IN',
+        );
+    }
+
+	// Check if posts are included
+    if (!empty($settings['include_posts'])) {
+        $args['post__in'] = $settings['include_posts'];
+    }
+
+    // Check if posts are excluded
+    if (!empty($settings['exclude_posts'])) {
+        $args['post__not_in'] = $settings['exclude_posts'];
+    }
+
+    // Ensure tax_query is set correctly
+    if (isset($args['tax_query']) && count($args['tax_query']) > 1) {
+        $args['tax_query']['relation'] = 'AND';
+    }
+
+    $recent_posts = new \WP_Query($args);
+    ?>
 
 <div class="row">
+    <?php while ($recent_posts->have_posts()) : $recent_posts->the_post(); ?>
     <div class="col-xl-4 col-lg-4 col-md-6">
         <div class="tpblog mb-40">
             <div class="tpblog__thumb br-20 mb-35 wow img-custom-anim-top" data-wow-duration="1.5s"
                 data-wow-delay="0.1s">
-                <a href="blog-details.html"><img src="assets/img/blog/blog-post-01.jpg" alt="" /></a>
+                <a href="<?php the_permalink(); ?>">
+                    <?php the_post_thumbnail('full', array(
+                                'alt' => get_the_title(),
+                                'class' => 'img-fluid',
+                            )); ?>
+                </a>
             </div>
             <div class="tpblog__content pl-30">
                 <div class="tpblog__meta mb-15">
-                    <span><a href="#"><i class="fal fa-calendar-alt"></i> 20 Sep. 2023</a></span>
+                    <span><a
+                            href="<?php echo get_day_link(get_the_time('Y'), get_the_time('m'), get_the_time('j')); ?>"><i
+                                class="fal fa-calendar-alt"></i> <?php echo get_the_date(); ?></a></span>
                     <cite></cite>
-                    <span><a href="#"><i class="fal fa-certificate"></i> Creative</a></span>
+                    <span><a href="<?php echo get_category_link(get_the_category()[0]->term_id); ?>"><i
+                                class="fal fa-certificate"></i> <?php echo get_the_category()[0]->name; ?></a></span>
                 </div>
                 <h3 class="tpblog__title mb-25">
-                    <a href="blog-details.html">Potent be interdum ipsum pellentes code primis laoreet
-                        diam per established</a>
+                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                 </h3>
                 <div class="tpblog__btn">
-                    <a class="tp-text-btn" href="blog-details.html">Read More <i class="far fa-arrow-right"></i></a>
+                    <a class="tp-text-btn" href="<?php the_permalink(); ?>">Read More <i
+                            class="far fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-4 col-lg-4 col-md-6">
-        <div class="tpblog mb-40">
-            <div class="tpblog__thumb br-20 mb-35 wow img-custom-anim-top" data-wow-duration="1.5s"
-                data-wow-delay="0.2s">
-                <a href="blog-details.html"><img src="assets/img/blog/blog-post-02.jpg" alt="" /></a>
-            </div>
-            <div class="tpblog__content pl-30">
-                <div class="tpblog__meta mb-15">
-                    <span><a href="#"><i class="fal fa-calendar-alt"></i> 20 Sep. 2023</a></span>
-                    <cite></cite>
-                    <span><a href="#"><i class="fal fa-certificate"></i> Creative</a></span>
-                </div>
-                <h3 class="tpblog__title mb-25">
-                    <a href="blog-details.html">Leos placerat sagittis vitae quisque scelerisque sociosqu
-                        bulputate natoque</a>
-                </h3>
-                <div class="tpblog__btn">
-                    <a class="tp-text-btn" href="blog-details.html">Read More <i class="far fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-4 col-lg-4 col-md-6">
-        <div class="tpblog mb-40">
-            <div class="tpblog__thumb br-20 mb-35 wow img-custom-anim-top" data-wow-duration="1.5s"
-                data-wow-delay="0.4s">
-                <a href="blog-details.html"><img src="assets/img/blog/blog-post-03.jpg" alt="" /></a>
-            </div>
-            <div class="tpblog__content pl-30">
-                <div class="tpblog__meta mb-15">
-                    <span><a href="#"><i class="fal fa-calendar-alt"></i> 20 Sep. 2023</a></span>
-                    <cite></cite>
-                    <span><a href="#"><i class="fal fa-certificate"></i> Creative</a></span>
-                </div>
-                <h3 class="tpblog__title mb-25">
-                    <a href="blog-details.html">Metus fames dictum curae tempus over parturient tempor
-                        cubilia venenatis.</a>
-                </h3>
-                <div class="tpblog__btn">
-                    <a class="tp-text-btn" href="blog-details.html">Read More <i class="far fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php endwhile; wp_reset_postdata(); ?>
 </div>
 
 <?php
-	}
+}
 }
