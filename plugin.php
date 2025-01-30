@@ -16,6 +16,8 @@ use ElementorExdosAddon\Widgets\Exdos_Testimonial;
 use ElementorExdosAddon\Widgets\Exdos_Brand;
 use ElementorExdosAddon\Widgets\Exdos_Team;
 use ElementorExdosAddon\Widgets\Exdos_Timeline;
+use ElementorExdosAddon\Widgets\Exdos_Counter;
+use ElementorExdosAddon\Widgets\Exdos_Blog;
 
 /**
  * Class Plugin
@@ -66,6 +68,7 @@ class Plugin
 	public function widget_scripts()
 	{
 		wp_register_script('elementor-hello-world', plugins_url('/assets/js/hello-world.js', __FILE__), ['jquery'], false, true);
+		
 	}
 
 	/**
@@ -136,6 +139,8 @@ class Plugin
 		require_once(__DIR__ . '/widgets/exdos-brand.php');
 		require_once(__DIR__ . '/widgets/exdos-team.php');
 		require_once(__DIR__ . '/widgets/exdos-timeline.php');
+		require_once(__DIR__ . '/widgets/exdos-counter.php');
+		require_once(__DIR__ . '/widgets/exdos-blog.php');
 
 
 		// Register Widgets
@@ -152,6 +157,8 @@ class Plugin
 		$widgets_manager->register(new Exdos_Brand());
 		$widgets_manager->register(new Exdos_Team());
 		$widgets_manager->register(new Exdos_Timeline());
+		$widgets_manager->register(new Exdos_Counter());
+		$widgets_manager->register(new Exdos_Blog());
 
 	}
 
