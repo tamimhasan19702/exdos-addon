@@ -56,7 +56,11 @@ class Exdos_Testimonial extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-blockquote';
+		return 'eicon-blockquote exdos-addon';
+	}
+
+	public function get_style_depends(): array {
+		return [ 'exdos-addons-css' ];
 	}
 
 	/**

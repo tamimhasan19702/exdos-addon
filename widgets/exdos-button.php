@@ -56,7 +56,11 @@ class Exdos_Button extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-button';
+		return 'eicon-button exdos-addon';
+	}
+
+	public function get_style_depends(): array {
+		return [ 'exdos-addons-css' ];
 	}
 
 	/**
@@ -204,18 +208,18 @@ class Exdos_Button extends Widget_Base
 
 
 
-		<?php if (!empty($settings['button_text'])): ?>
-			<div class="tp-about-btn">
-				<a <?php $this->print_render_attribute_string('button_arg'); ?>>
-					<span class="tp-btn-wrap">
-						<span class="tp-btn-y-1"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
-						<span class="tp-btn-y-2"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
-					</span>
-					<i></i>
-				</a>
-			</div>
-		<?php endif; ?>
+<?php if (!empty($settings['button_text'])): ?>
+<div class="tp-about-btn">
+    <a <?php $this->print_render_attribute_string('button_arg'); ?>>
+        <span class="tp-btn-wrap">
+            <span class="tp-btn-y-1"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
+            <span class="tp-btn-y-2"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
+        </span>
+        <i></i>
+    </a>
+</div>
+<?php endif; ?>
 
-		<?php
+<?php
 	}
 }

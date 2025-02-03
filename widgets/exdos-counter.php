@@ -56,8 +56,11 @@ class Exdos_Counter extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-counter';
+		return 'eicon-counter exdos-addon';
 	}
+
+
+
 
 	/**
 	 * Retrieve the list of categories the widget belongs to.
@@ -122,7 +125,7 @@ class Exdos_Counter extends Widget_Base
  */
 public function get_style_depends()
 {
-    return ['flaticon_exdos'];
+    return ['flaticon_exdos', 'exdos-addons-css'];
 }
 
 

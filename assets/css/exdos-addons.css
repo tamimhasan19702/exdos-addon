@@ -1,0 +1,16 @@
+/** @format */
+:root {
+  --exdos-color: #0057fc;
+  --exdos-color-2: #fee928;
+}
+
+.exdos-addon::after {
+  content: "EXDOS";
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  font-size: 8px;
+  padding: 5px;
+  background-color: var(--exdos-color);
+  color: var(--exdos-color-2);
+}

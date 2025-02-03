@@ -17,6 +17,7 @@ if (!defined('ABSPATH'))
 
 
 include_once('inc/exdos-functionality.php');
+include_once('inc/exdos-post-type.php');
 
 /**
  * Main Exdos addon Class

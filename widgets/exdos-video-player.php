@@ -56,7 +56,11 @@ class Exdos_Video_Player extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-video-camera';
+		return 'eicon-video-camera exdos-addon';
+	}
+
+	public function get_style_depends(): array {
+		return [ 'exdos-addons-css' ];
 	}
 
 	/**

@@ -57,7 +57,11 @@ class Exdos_header extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-heading';
+		return 'eicon-heading exdos-addon';
+	}
+
+	public function get_style_depends(): array {
+		return [ 'exdos-addons-css' ];
 	}
 
 	/**

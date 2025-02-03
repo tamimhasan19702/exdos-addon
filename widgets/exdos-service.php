@@ -56,7 +56,11 @@ class Exdos_Service extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-kit-details';
+		return 'eicon-kit-details exdos-addon';
+	}
+
+	public function get_style_depends(): array {
+		return [ 'exdos-addons-css' ];
 	}
 
 	/**

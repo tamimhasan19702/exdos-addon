@@ -56,7 +56,7 @@ class Exdos_Brand extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-meetup';
+		return 'eicon-meetup exdos-addon';
 	}
 
 	/**
@@ -199,6 +199,10 @@ $this->start_controls_section(
 		);
 
 		$this->end_controls_section();
+	}
+
+	public function get_style_depends(): array {
+		return [ 'exdos-addons-css' ];
 	}
 
 	/**

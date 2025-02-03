@@ -56,7 +56,7 @@ class Exdos_Blog extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-blog';
+		return 'eicon-posts-carousel exdos-addon';
 	}
 
 	/**
@@ -78,6 +78,10 @@ class Exdos_Blog extends Widget_Base
 		return ['exdos-addons'];
 	}
 
+
+	public function get_style_depends(): array {
+		return [ 'exdos-addons-css' ];
+	}
 	/**
 	 * Retrieve the list of scripts the widget depended on.
 	 *
@@ -223,6 +227,7 @@ class Exdos_Blog extends Widget_Base
 		}
 		return $options;
 	}
+
 
 
 	private function get_blog_posts() {

@@ -57,9 +57,13 @@ class Exdos_hero extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-banner';
+		return 'eicon-banner exdos-addon';
 	}
 
+
+	public function get_style_depends(): array {
+		return [ 'exdos-addons-css' ];
+	}
 
 	/**
 	 * Retrieve the list of categories the widget belongs to.

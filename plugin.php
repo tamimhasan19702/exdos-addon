@@ -18,6 +18,7 @@ use ElementorExdosAddon\Widgets\Exdos_Team;
 use ElementorExdosAddon\Widgets\Exdos_Timeline;
 use ElementorExdosAddon\Widgets\Exdos_Counter;
 use ElementorExdosAddon\Widgets\Exdos_Blog;
+use ElementorExdosAddon\Widgets\Exdos_Portfolio;
 
 /**
  * Class Plugin
@@ -94,6 +95,15 @@ class Plugin
 		);
 	}
 
+
+	public function editor_styles()
+	{
+		
+			wp_enqueue_style('exdos-addons-css', plugins_url('/assets/css/exdos-addons.css', __FILE__),null, '1.0.0');
+			wp_enqueue_style('flaticon-exdos', plugins_url('/assets/css/flaticon-exdos.css', __FILE__));
+		
+	}
+
 	/**
 	 * Force load editor script as a module
 	 *
@@ -141,6 +151,7 @@ class Plugin
 		require_once(__DIR__ . '/widgets/exdos-timeline.php');
 		require_once(__DIR__ . '/widgets/exdos-counter.php');
 		require_once(__DIR__ . '/widgets/exdos-blog.php');
+		require_once(__DIR__ . '/widgets/exdos-portfolio.php');
 
 
 		// Register Widgets
@@ -159,6 +170,7 @@ class Plugin
 		$widgets_manager->register(new Exdos_Timeline());
 		$widgets_manager->register(new Exdos_Counter());
 		$widgets_manager->register(new Exdos_Blog());
+		$widgets_manager->register(new Exdos_Portfolio());
 
 	}
 
@@ -189,7 +201,8 @@ class Plugin
 			[
 				'title' => 'Exdos Addons Category',
 				'icon' => 'font',
-			]
+			],
+			11 // Set priority to show this category first
 		);
 	}
 
@@ -215,6 +228,8 @@ class Plugin
 
 		// Register editor scripts
 		add_action('elementor/editor/after_enqueue_scripts', [$this, 'editor_scripts']);
+
+		add_action('elementor/editor/after_enqueue_styles', [$this, 'editor_styles']);
 
 		$this->add_page_settings_controls();
 	}

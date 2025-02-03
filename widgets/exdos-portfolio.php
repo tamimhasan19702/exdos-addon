@@ -9,13 +9,13 @@ if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
 
 /**
- * Elementor exdos_shape
+ * Elementor exdos_portfolio
  *
- * Elementor widget for exdos_shape.
+ * Elementor widget for exdos_portfolio.
  *
  * @since 1.0.0
  */
-class Exdos_Shape extends Widget_Base
+class Exdos_Portfolio extends Widget_Base
 {
 	/**
 	 * Retrieve the widget name.
@@ -28,7 +28,7 @@ class Exdos_Shape extends Widget_Base
 	 */
 	public function get_name()
 	{
-		return 'Exdos Shape';
+		return 'Exdos Portfolio';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Exdos_Shape extends Widget_Base
 	 */
 	public function get_title()
 	{
-		return __('Exdos Shape', 'exdos-addons');
+		return __('Exdos Portfolio', 'exdos-addons');
 	}
 
 	/**
@@ -56,12 +56,14 @@ class Exdos_Shape extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-shape exdos-addon';
+		return 'eicon-posts-justified exdos-addon';
 	}
 
 	public function get_style_depends(): array {
 		return [ 'exdos-addons-css' ];
 	}
+
+
 
 	/**
 	 * Retrieve the list of categories the widget belongs to.
@@ -113,57 +115,15 @@ class Exdos_Shape extends Widget_Base
 		// $this->register_style_tab_controls();
 	}
 
-	protected function exdos_shapes()
+	protected function exdos_portfolio()
 	{
 		$this->start_controls_section(
-			'shape_image_section',
+			'button_section',
 			[
-				'label' => __('Shape Image', 'exdos-addons'),
+				'label' => __('Button', 'exdos-addons'),
 			]
 		);
 
-		$this->add_control(
-			'shape_image_1',
-			[
-				'label' => __('Shape 1', 'exdos-addons'),
-				'type' => Controls_Manager::MEDIA,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-				],
-			]
-		);
-
-		$this->add_control(
-			'shape_image_2',
-			[
-				'label' => __('Shape 2', 'exdos-addons'),
-				'type' => Controls_Manager::MEDIA,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-				],
-			]
-		);
-
-		$this->add_control(
-			'shape_image_3',
-			[
-				'label' => __('Shape 3', 'exdos-addons'),
-				'type' => Controls_Manager::MEDIA,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-				],
-				
-			]
-		);
 
 		$this->end_controls_section();
 	}
@@ -171,7 +131,7 @@ class Exdos_Shape extends Widget_Base
 	// register tab controls
 	protected function register_tab_controls()
 	{
-		$this->exdos_shapes();
+		$this->exdos_portfolio();
 	}
 
 	// register style tab controls
@@ -218,28 +178,25 @@ class Exdos_Shape extends Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
+		$this->add_render_attribute('button_arg', 'class', 'tp-btn');
+		$this->add_link_attributes('button_arg', $settings['button_link']);
 
-		// render all images
 		?>
 
-<div class="tp-about-shape">
-    <?php if(!empty($settings['shape_image_1']['url'])):?>
-    <img class="tp-about-shape-1 p-absolute d-none d-md-block" src="<?php echo $settings['shape_image_1']['url']; ?>"
-        alt="<?php echo $settings['shape_image_1']['alt']; ?>" />
-    <?php endif;?>
 
-    <?php if(!empty($settings['shape_image_2']['url'])):?>
-    <img class="tp-about-shape-2 p-absolute" src="<?php echo $settings['shape_image_2']['url']; ?>"
-        alt="<?php echo $settings['shape_image_2']['alt']; ?>" />
-    <?php endif;?>
 
-    <?php if(!empty($settings['shape_image_3']['url'])):?>
-    <img class="tp-about-shape-3 p-absolute" src="<?php echo $settings['shape_image_3']['url']; ?>"
-        alt="<?php echo $settings['shape_image_3']['alt']; ?>" />
-    <?php endif;?>
+<?php if (!empty($settings['button_text'])): ?>
+<div class="tp-about-btn">
+    <a <?php $this->print_render_attribute_string('button_arg'); ?>>
+        <span class="tp-btn-wrap">
+            <span class="tp-btn-y-1"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
+            <span class="tp-btn-y-2"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
+        </span>
+        <i></i>
+    </a>
 </div>
+<?php endif; ?>
 
-<?php 
-
+<?php
 	}
 }
