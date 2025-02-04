@@ -9,13 +9,13 @@ if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
 
 /**
- * Elementor exdos_button
+ * Elementor exdos_contact
  *
- * Elementor widget for exdos_button.
+ * Elementor widget for exdos_contact.
  *
  * @since 1.0.0
  */
-class Exdos_Button extends Widget_Base
+class Exdos_Contact extends Widget_Base
 {
 	/**
 	 * Retrieve the widget name.
@@ -28,7 +28,7 @@ class Exdos_Button extends Widget_Base
 	 */
 	public function get_name()
 	{
-		return 'Exdos Button';
+		return 'Exdos Contact';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Exdos_Button extends Widget_Base
 	 */
 	public function get_title()
 	{
-		return __('Exdos Button', 'exdos-addons');
+		return __('Exdos Contact', 'exdos-addons');
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Exdos_Button extends Widget_Base
 	 */
 	public function get_icon()
 	{
-		return 'eicon-button exdos-addon';
+		return 'eicon-envelope exdos-addon';
 	}
 
 
@@ -113,40 +113,49 @@ class Exdos_Button extends Widget_Base
 		// $this->register_style_tab_controls();
 	}
 
-	protected function exdos_button_button()
+	protected function exdos_contact()
 	{
 		$this->start_controls_section(
-			'button_section',
+			'contact_section',
 			[
-				'label' => __('Button', 'exdos-addons'),
+				'label' => __('Contact', 'exdos-addons'),
 			]
 		);
 
+
 		$this->add_control(
-			'button_text',
+			'contact_heading',
 			[
-				'label' => __('Button Text', 'exdos-addons'),
+				'label' => __('Contact Heading', 'exdos-addons'),
 				'type' => Controls_Manager::TEXT,
-				'label_block' => true,
-				'default' => __('Discover More', 'exdos-addons'),
+				'default' => __('Contact Us', 'exdos-addons'),
+				'placeholder' => __('Contact Us', 'exdos-addons'),
+			]
+		);
+		
+
+		$this->add_control(
+			'contact_form_title',		[
+				'label' => __('Contact form title', 'exdos-addons'),
+				'type' => Controls_Manager::TEXT,
+				'default' => __('Get in touch with us', 'exdos-addons'),
+				'placeholder' => __('Get in touch with us', 'exdos-addons'),
 			]
 		);
 
+
 		$this->add_control(
-			'button_link',
+			'contact_form_shortcode',
 			[
-				'label' => esc_html__('Button Link', 'exdos-addons'),
-				'type' => Controls_Manager::URL,
-				'options' => ['url', 'is_external', 'nofollow'],
-				'default' => [
-					'url' => '',
-					'is_external' => false,
-					'nofollow' => false,
-					'placeholder' => 'https://your-link.com',
-				],
+				'label' => __('Contact Form Shortcode', 'exdos-addons'),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'description' => __('Add your contact form shortcode here', 'exdos-addons'),
 				'label_block' => true,
 			]
 		);
+
+		
 
 		$this->end_controls_section();
 	}
@@ -154,7 +163,7 @@ class Exdos_Button extends Widget_Base
 	// register tab controls
 	protected function register_tab_controls()
 	{
-		$this->exdos_button_button();
+		$this->exdos_contact();
 	}
 
 	// register style tab controls
@@ -201,25 +210,63 @@ class Exdos_Button extends Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
-		$this->add_render_attribute('button_arg', 'class', 'tp-btn');
-		$this->add_link_attributes('button_arg', $settings['button_link']);
+		
 
 		?>
 
 
+<div class="row">
+    <?php if (!empty($settings['contact_heading'])): ?>
+    <div class="col-xl-5">
+        <div class="tp-section-title-wrapper mb-50 wow img-custom-anim-left" data-wow-duration="1.5s"
+            data-wow-delay="0.1s">
+            <h2 class="tp-section-title mb-20 fs-100"><?php echo $settings['contact_heading']; ?></h2>
+        </div>
+    </div>
+    <?php endif; ?>
+    <div class="col-xl-<?php echo !empty($settings['contact_heading']) ? '7' : '12'; ?>">
+        <?php if (!empty($settings['contact_heading'])): ?>
+        <div class="contact-form-wrapper">
+            <h3 class="tpform-title mb-25"><?php echo $settings['contact_form_title']; ?></h3>
+        </div>
+        <?php endif; ?>
+        <?php if (!empty($settings['contact_form_shortcode'])): ?>
+        <div class="contact-form-box">
 
-<?php if (!empty($settings['button_text'])): ?>
-<div class="tp-about-btn">
-    <a <?php $this->print_render_attribute_string('button_arg'); ?>>
-        <span class="tp-btn-wrap">
-            <span class="tp-btn-y-1"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
-            <span class="tp-btn-y-2"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
-        </span>
-        <i></i>
-    </a>
+            <!-- <div class="row">
+                    <div class="col-md-12 mb-30">
+                        <input type="text" placeholder="Full Name*" />
+                    </div>
+                    <div class="col-md-6 mb-30">
+                        <input type="email" placeholder="Email Here*" />
+                    </div>
+                    <div class="col-md-6 mb-30">
+                        <input type="email" placeholder="subject *" />
+                    </div>
+                    <div class="col-md-12 mb-45">
+                        <textarea name="nessage" cols="30" rows="10" placeholder="write note*"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="tp-btn">
+                            <span class="tp-btn-wrap">
+                                <span class="tp-btn-y-1">Send message</span>
+                                <span class="tp-btn-y-2">Send message</span>
+                            </span>
+                            <i></i>
+                        </button>
+                    </div>
+                </div> -->
+
+            <?php echo do_shortcode($settings['contact_form_shortcode']); ?>
+
+        </div>
+        <?php endif; ?>
+    </div>
 </div>
-<?php endif; ?>
 
-<?php
-	}
+
+<?php 
+}
+
+	
 }

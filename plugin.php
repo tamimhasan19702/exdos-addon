@@ -17,6 +17,7 @@ use ElementorExdosAddon\Widgets\Exdos_Brand;
 use ElementorExdosAddon\Widgets\Exdos_Team;
 use ElementorExdosAddon\Widgets\Exdos_Timeline;
 use ElementorExdosAddon\Widgets\Exdos_Counter;
+use ElementorExdosAddon\Widgets\Exdos_Contact;
 use ElementorExdosAddon\Widgets\Exdos_Blog;
 use ElementorExdosAddon\Widgets\Exdos_Portfolio;
 
@@ -150,8 +151,10 @@ class Plugin
 		require_once(__DIR__ . '/widgets/exdos-team.php');
 		require_once(__DIR__ . '/widgets/exdos-timeline.php');
 		require_once(__DIR__ . '/widgets/exdos-counter.php');
+		require_once(__DIR__ . '/widgets/exdos-contact.php');
 		require_once(__DIR__ . '/widgets/exdos-blog.php');
 		require_once(__DIR__ . '/widgets/exdos-portfolio.php');
+
 
 
 		// Register Widgets
@@ -169,6 +172,7 @@ class Plugin
 		$widgets_manager->register(new Exdos_Team());
 		$widgets_manager->register(new Exdos_Timeline());
 		$widgets_manager->register(new Exdos_Counter());
+		$widgets_manager->register(new Exdos_Contact());
 		$widgets_manager->register(new Exdos_Blog());
 		$widgets_manager->register(new Exdos_Portfolio());
 

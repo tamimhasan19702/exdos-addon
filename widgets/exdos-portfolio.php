@@ -178,24 +178,104 @@ class Exdos_Portfolio extends Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
-		$this->add_render_attribute('button_arg', 'class', 'tp-btn');
-		$this->add_link_attributes('button_arg', $settings['button_link']);
+		
 
 		?>
 
 
-
-<?php if (!empty($settings['button_text'])): ?>
-<div class="tp-about-btn">
-    <a <?php $this->print_render_attribute_string('button_arg'); ?>>
-        <span class="tp-btn-wrap">
-            <span class="tp-btn-y-1"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
-            <span class="tp-btn-y-2"><?php echo exdos_addon_kses($settings['button_text']) ?></span>
-        </span>
-        <i></i>
-    </a>
+<div class="tp-portfolio-filter text-center mb-50">
+    <button class="active" data-filter="*">Show All</button>
+    <button data-filter=".cat1">graphic</button>
+    <button data-filter=".cat2">branding</button>
+    <button data-filter=".cat3">website</button>
+    <button data-filter=".cat4">motion graphic</button>
 </div>
-<?php endif; ?>
+<div class="row grid">
+    <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat2 cat3">
+        <div class="tp-portfolio-item mb-40">
+            <div class="tp-portfolio-thumb br-15 position-relative mb-20">
+                <img src="assets/img/portfolio/portfolio-page-01.jpg" alt="">
+                <div class="tp-portfolio-arrow">
+                    <a href="portfolio-details.html"><i class="flaticon-right-arrow"></i></a>
+                </div>
+            </div>
+            <div class="tp-portfolio-text text-center">
+                <h3 class="tp-portfolio-title tp-fs-30"><a href="portfolio-details.html">Branding design</a></h3>
+                <p class="m-0 pl-60"><span class="mr-5"></span> Creative design</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat1 cat3">
+        <div class="tp-portfolio-item mb-40">
+            <div class="tp-portfolio-thumb br-15 position-relative mb-20">
+                <img src="assets/img/portfolio/portfolio-page-02.jpg" alt="">
+                <div class="tp-portfolio-arrow">
+                    <a href="portfolio-details.html"><i class="flaticon-right-arrow"></i></a>
+                </div>
+            </div>
+            <div class="tp-portfolio-text text-center">
+                <h3 class="tp-portfolio-title tp-fs-30"><a href="portfolio-details.html">Motion graphic</a></h3>
+                <p class="m-0 pl-60"><span class="mr-5"></span> Creative design</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat2 cat4">
+        <div class="tp-portfolio-item mb-40">
+            <div class="tp-portfolio-thumb br-15 position-relative mb-20">
+                <img src="assets/img/portfolio/portfolio-page-03.jpg" alt="">
+                <div class="tp-portfolio-arrow">
+                    <a href="portfolio-details.html"><i class="flaticon-right-arrow"></i></a>
+                </div>
+            </div>
+            <div class="tp-portfolio-text text-center">
+                <h3 class="tp-portfolio-title tp-fs-30"><a href="portfolio-details.html">Music compose</a></h3>
+                <p class="m-0 pl-60"><span class="mr-5"></span> Creative design</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat1 cat4">
+        <div class="tp-portfolio-item mb-40">
+            <div class="tp-portfolio-thumb br-15 position-relative mb-20">
+                <img src="assets/img/portfolio/portfolio-page-04.jpg" alt="">
+                <div class="tp-portfolio-arrow">
+                    <a href="portfolio-details.html"><i class="flaticon-right-arrow"></i></a>
+                </div>
+            </div>
+            <div class="tp-portfolio-text text-center">
+                <h3 class="tp-portfolio-title tp-fs-30"><a href="portfolio-details.html">Product design</a></h3>
+                <p class="m-0 pl-60"><span class="mr-5"></span> Creative design</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat2 cat3">
+        <div class="tp-portfolio-item mb-40">
+            <div class="tp-portfolio-thumb br-15 position-relative mb-20">
+                <img src="assets/img/portfolio/portfolio-page-05.jpg" alt="">
+                <div class="tp-portfolio-arrow">
+                    <a href="portfolio-details.html"><i class="flaticon-right-arrow"></i></a>
+                </div>
+            </div>
+            <div class="tp-portfolio-text text-center">
+                <h3 class="tp-portfolio-title tp-fs-30"><a href="portfolio-details.html">Visual Identity</a></h3>
+                <p class="m-0 pl-60"><span class="mr-5"></span> Creative design</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat1 cat4">
+        <div class="tp-portfolio-item mb-40">
+            <div class="tp-portfolio-thumb br-15 position-relative mb-20">
+                <img src="assets/img/portfolio/portfolio-page-06.jpg" alt="">
+                <div class="tp-portfolio-arrow">
+                    <a href="portfolio-details.html"><i class="flaticon-right-arrow"></i></a>
+                </div>
+            </div>
+            <div class="tp-portfolio-text text-center">
+                <h3 class="tp-portfolio-title tp-fs-30"><a href="portfolio-details.html">Logo design</a></h3>
+                <p class="m-0 pl-60"><span class="mr-5"></span> Creative design</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php
 	}
