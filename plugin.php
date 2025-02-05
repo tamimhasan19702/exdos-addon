@@ -20,6 +20,7 @@ use ElementorExdosAddon\Widgets\Exdos_Counter;
 use ElementorExdosAddon\Widgets\Exdos_Contact;
 use ElementorExdosAddon\Widgets\Exdos_Blog;
 use ElementorExdosAddon\Widgets\Exdos_Portfolio;
+use ElementorExdosAddon\Widgets\Exdos_Icon_Box;
 
 /**
  * Class Plugin
@@ -154,6 +155,7 @@ class Plugin
 		require_once(__DIR__ . '/widgets/exdos-contact.php');
 		require_once(__DIR__ . '/widgets/exdos-blog.php');
 		require_once(__DIR__ . '/widgets/exdos-portfolio.php');
+		require_once(__DIR__ . '/widgets/exdos-icon-box.php');
 
 
 
@@ -175,6 +177,7 @@ class Plugin
 		$widgets_manager->register(new Exdos_Contact());
 		$widgets_manager->register(new Exdos_Blog());
 		$widgets_manager->register(new Exdos_Portfolio());
+		$widgets_manager->register(new Exdos_Icon_Box());
 
 	}
 
