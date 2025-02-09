@@ -138,10 +138,12 @@ public function get_style_depends()
 			]
 		);
 
+		
+		
 		$this->add_control(
 			'exdos_counter_icon',
 			[
-				'label' => __( 'Icon', 'exdos-addons' ),
+				'label' => __('Icon', 'exdos-addons'),
 				'type' => Controls_Manager::ICONS,
 				'default' => [
 					'value' => 'flaticon-merging',
@@ -158,8 +160,13 @@ public function get_style_depends()
 						'flaticon-award-2',
 					],
 				],
+				
 			]
 		);
+		
+		
+		
+	
 
 		$this->add_control(
 			'exdos_counter_title',
@@ -267,11 +274,20 @@ public function get_style_depends()
     <div class="custom-row">
         <div class="cols">
             <div class="tpfact text-center text-lg-start mb-40">
-                <?php if (!empty($settings['exdos_counter_icon']['value'])): ?>
+
+                <?php if ($settings['exdos_counter_type'] === 'icon' && !empty($settings['exdos_counter_icon']['value'])): ?>
                 <div class="tpfact__icon">
                     <span><i class="<?php echo esc_attr($settings['exdos_counter_icon']['value']); ?>"></i></span>
                 </div>
+                <?php elseif ($settings['exdos_counter_type'] === 'image' && !empty($settings['exdos_counter_image']['url'])): ?>
+                <div class="tpfact__icon">
+                    <img src="<?php echo esc_url($settings['exdos_counter_image']['url']); ?>"
+                        alt="<?php echo esc_attr($settings['exdos_counter_title']); ?>">
+                </div>
                 <?php endif; ?>
+
+
+
                 <div class="tpfact__text">
                     <?php if (!empty($settings['exdos_counter_title'])): ?>
                     <h4 class="tpfact__title mb-30">
