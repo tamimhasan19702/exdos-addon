@@ -138,6 +138,19 @@ public function get_style_depends()
 			]
 		);
 
+		$this->add_control(
+			'exdos_counter_type',
+			[
+				'label' => __('Type', 'exdos-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'image',
+				'options' => [
+					'icon' => __('Icon', 'exdos-addons'),
+					'image' => __('Image', 'exdos-addons'),
+				],
+			]
+		);
+
 		
 		
 		$this->add_control(
@@ -160,10 +173,29 @@ public function get_style_depends()
 						'flaticon-award-2',
 					],
 				],
+				'condition' => [
+					'exdos_counter_type' => 'icon',
+				],
 				
 			]
 		);
 		
+
+		$this->add_control(
+			'exdos_counter_image',
+			[
+				'label' => __('Image', 'exdos-addons'),
+				'type' => Controls_Manager::MEDIA,
+				'default' => [
+					'url' => Utils::get_placeholder_image_src(),
+				],
+				'condition' => [
+					'exdos_counter_type' => 'image',
+				],
+				
+			]
+		);
+
 		
 		
 	
@@ -194,6 +226,18 @@ public function get_style_depends()
 		);
 
 		$this->add_control(
+			'exdos_counter_prefix',
+			[
+				'label' => __( 'Prefix', 'exdos-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'placeholder' => __( 'Enter prefix', 'exdos-addons' ),
+				'label_block' => true,
+			]
+		);
+
+
+		$this->add_control(
 			'exdos_counter_suffix',
 			[
 				'label' => __( 'Suffix', 'exdos-addons' ),
@@ -204,16 +248,7 @@ public function get_style_depends()
 			]
 		);
 
-		$this->add_control(
-			'exdos_counter_prefix',
-			[
-				'label' => __( 'Prefix', 'exdos-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'placeholder' => __( 'Enter prefix', 'exdos-addons' ),
-				'label_block' => true,
-			]
-		);
+		
 
 		$this->end_controls_section();
 	}
@@ -270,41 +305,27 @@ public function get_style_depends()
 		$settings = $this->get_settings_for_display();
 		?>
 
-<div class="container">
-    <div class="custom-row">
-        <div class="cols">
-            <div class="tpfact text-center text-lg-start mb-40">
-
-                <?php if ($settings['exdos_counter_type'] === 'icon' && !empty($settings['exdos_counter_icon']['value'])): ?>
-                <div class="tpfact__icon">
-                    <span><i class="<?php echo esc_attr($settings['exdos_counter_icon']['value']); ?>"></i></span>
-                </div>
-                <?php elseif ($settings['exdos_counter_type'] === 'image' && !empty($settings['exdos_counter_image']['url'])): ?>
-                <div class="tpfact__icon">
-                    <img src="<?php echo esc_url($settings['exdos_counter_image']['url']); ?>"
-                        alt="<?php echo esc_attr($settings['exdos_counter_title']); ?>">
-                </div>
-                <?php endif; ?>
-
-
-
-                <div class="tpfact__text">
-                    <?php if (!empty($settings['exdos_counter_title'])): ?>
-                    <h4 class="tpfact__title mb-30">
-                        <?php echo esc_html($settings['exdos_counter_title']); ?>
-                    </h4>
-                    <?php endif; ?>
-                    <span>
-                        <?php 
-								// Concatenate prefix, text, and suffix without spaces
-								echo esc_html(trim($settings['exdos_counter_prefix'])) . 
-									 esc_html(trim($settings['exdos_counter_text'])) . 
-									 esc_html(trim($settings['exdos_counter_suffix'])); 
-								?>
-                    </span>
-                </div>
-            </div>
-        </div>
+<div class="tpfact text-center text-lg-start mb-40">
+    <?php if (!empty($settings['exdos_counter_icon']['value'])): ?>
+    <div class="tpfact__icon">
+        <span><i class="<?php echo esc_attr($settings['exdos_counter_icon']['value']); ?>"></i></span>
+    </div>
+    <?php endif;?>
+    <?php if (!empty($settings['exdos_counter_image']['url'])): ?>
+    <div class="tpfact__icon">
+        <span><img src="<?php echo esc_url($settings['exdos_counter_image']['url']); ?>"
+                alt="<?php echo esc_attr($settings['exdos_counter_image']['alt']); ?>"></span>
+    </div>
+    <?php endif;?>
+    <div class="tpfact__text">
+        <?php if (!empty($settings['exdos_counter_title'])): ?>
+        <h4 class="tpfact__title mb-30"><?php echo wp_kses_post($settings['exdos_counter_title']); ?></h4>
+        <?php endif;?>
+        <?php if (!empty($settings['exdos_counter_text'])): ?>
+        <span>
+            <?php echo esc_attr($settings['exdos_counter_prefix'] . $settings['exdos_counter_text'] . $settings['exdos_counter_suffix']); ?>
+        </span>
+        <?php endif;?>
     </div>
 </div>
 
