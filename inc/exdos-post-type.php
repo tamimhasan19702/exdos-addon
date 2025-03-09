@@ -49,6 +49,7 @@ function exdos_post_type() {
         'show_in_nav_menus' => true,
         'show_tagcloud' => true,
         'show_ui' => true,
+        
     ));
 }
 

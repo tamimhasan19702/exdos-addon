@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: Exdos addon
- * Description: This is a mandetory plugin for exdos theme
+ * Plugin Name: Ostadfood addon
+ * Description: This is a mandetory plugin for Ostadfood theme
  * Version:     1.0.0
  * Author:     Tareq Monower
  * Author URI:  https://elementor.com/
- * Text Domain: exdos-addon
+ * Text Domain: ostadfood-addon
  * Elementor tested up to: 3.5.0
  * Elementor Pro tested up to: 3.5.0
  */

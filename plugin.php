@@ -2,26 +2,9 @@
 
 namespace ElementorExdosAddon;
 
-use ElementorExdosAddon\PageSettings\Page_Settings;
-use ElementorExdosAddon\Widgets\Exdos_Hero;
-use ElementorExdosAddon\Widgets\Exdos_Header;
+
 use ElementorExdosAddon\Widgets\Exdos_Button;
-use ElementorExdosAddon\Widgets\Exdos_Image;
-use ElementorExdosAddon\Widgets\Exdos_Video_Player;
-use ElementorExdosAddon\Widgets\Exdos_Shape;
-use ElementorExdosAddon\Widgets\Exdos_Service;
-use ElementorExdosAddon\Widgets\Exdos_Newsletter;
-use ElementorExdosAddon\Widgets\Exdos_Project_Tab;
-use ElementorExdosAddon\Widgets\Exdos_Testimonial;
-use ElementorExdosAddon\Widgets\Exdos_Brand;
-use ElementorExdosAddon\Widgets\Exdos_Team;
-use ElementorExdosAddon\Widgets\Exdos_Timeline;
-use ElementorExdosAddon\Widgets\Exdos_Counter;
-use ElementorExdosAddon\Widgets\Exdos_Contact;
-use ElementorExdosAddon\Widgets\Exdos_Blog;
-use ElementorExdosAddon\Widgets\Exdos_Portfolio;
-use ElementorExdosAddon\Widgets\Exdos_Icon_Box;
-use ElementorExdosAddon\Widgets\Exdos_Icon_List;
+
 
 /**
  * Class Plugin
@@ -158,6 +141,7 @@ class Plugin
 		require_once(__DIR__ . '/widgets/exdos-portfolio.php');
 		require_once(__DIR__ . '/widgets/exdos-icon-box.php');
 		require_once(__DIR__ . '/widgets/exdos-icon-list.php');
+		require_once(__DIR__ . '/widgets/exdos-faq.php');
 
 
 
@@ -181,6 +165,7 @@ class Plugin
 		$widgets_manager->register(new Exdos_Portfolio());
 		$widgets_manager->register(new Exdos_Icon_Box());
 		$widgets_manager->register(new Exdos_Icon_List());
+		$widgets_manager->register(new Exdos_Faq());
 
 	}
 
